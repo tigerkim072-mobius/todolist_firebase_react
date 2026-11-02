@@ -1,10 +1,32 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { addTodo, fetchTodos } from './services/todoService';
 
 function App() {
   const [todos, setTodos] = useState([]);
   const [newTitle, setNewTitle] = useState('');
   const [adding, setAdding] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  // 초기로딩 useEffect(()=> { ... }, []) 추가
+  useEffect(() => {
+    const loadTodos = async () => {
+      setLoading(true);
+      try {
+        const data = await fetchTodos();
+        setTodos(data);
+        console.log('Fetched todos:', data);
+      } catch (error) {
+        console.error('Error fetching todos:', error);
+        alert(
+          '할일 목록을 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.',
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadTodos();
+  }, []); // 즉시 실행함수 IIFE를 사용하여 비동기 함수 호출 (Immediately Invoked Function Expression)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,11 +74,24 @@ function App() {
             {adding ? '추가 중...' : '추가'}
           </button>
         </form>
+        {/* Loading Indicator */}
+        {
+          // network : Slow 4G 환경에서 테스트
+          loading && (
+            <p className="text-center text-slate-500">
+              할일 목록을 불러오는 중...
+            </p>
+          )
+        }
+        {/* TODO LIST */}
+        {!loading && todos.length === 0 && (
+          <p className="text-center text-slate-500">할 일이 없습니다.</p>
+        )}
         <ul className="space-y-2 max-h-[400px] overflow-y-auto ">
           {todos.map((todo) => (
             <li
               key={todo.id}
-              className="flex items-center gap-2 p-2 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors duration-300"
+              className="flex items-center justify-between gap-2 p-2 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors duration-300"
             >
               <label className="flex items-center gap-2">
                 <input
@@ -65,14 +100,21 @@ function App() {
                   onChange={() => handleToggleTodo(todo.id)}
                   className="form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500"
                 />
-                <span
-                  className="text-sm ${
-                    todo.completed ? 'line-through text-slate-400' : 'text-slate-800'
-                  }"
+                <label
+                  className={`text-sm ${todo.completed ? 'line-through text-slate-400' : 'text-slate-800'}`}
                 >
                   {todo.title}
-                </span>
+                </label>
               </label>
+
+              <button
+                type="button"
+                onClick={() => handleDeleteTodo(todo.id)}
+                className="text-xs text-red-500 hover:text-red-700 px-2 py-1 rounded 
+                  transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-red-500"
+              >
+                삭제
+              </button>
             </li>
           ))}
         </ul>
