@@ -1,19 +1,28 @@
 import { useState } from 'react';
+import { addTodo } from './services/todoService';
 
 function App() {
   const [newTitle, setNewTitle] = useState('');
   const [adding, setAdding] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('newTitle:', newTitle);
     // handleAddTodo(newTitle);
 
     const title = newTitle.trim();
     if (!title) return;
-    setNewTitle('');
-
     setAdding(true);
+
+    try {
+      addTodo(title);
+      setNewTitle('');
+    } catch (error) {
+      console.error('Error adding todo:', error);
+      alert('할일 추가 중 오류가 발생했습니다. 다시 시도해주세요.');
+    } finally {
+      setAdding(false);
+    }
   };
   return (
     <main className="min-h-screen flex bg-slate-100  items-center justify-center text-3xl  p-4">
