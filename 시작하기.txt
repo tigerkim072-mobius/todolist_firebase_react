@@ -103,7 +103,7 @@ const analytics = getAnalytics(app);
 export const db = getFirestore(app);
 
 
------------------------------------------------
+----------------------------------------------- v2
 https://www.youtube.com/watch?v=pK8Q2ix_n7A&list=PLTb3qGCzYjS0Qm0PDKtU9v3m5F1iO_ZFf&index=4
 
 기본스타일 적용하기
