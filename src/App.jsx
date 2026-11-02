@@ -52,6 +52,30 @@ function App() {
             {adding ? '추가 중...' : '추가'}
           </button>
         </form>
+        <ul className="space-y-2 max-h-[400px] overflow-y-auto ">
+          {todos.map((todo) => (
+            <li
+              key={todo.id}
+              className="flex items-center gap-2 p-2 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors duration-300"
+            >
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={todo.completed}
+                  onChange={() => handleToggleTodo(todo.id)}
+                  className="form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500"
+                />
+                <span
+                  className="text-sm ${
+                    todo.completed ? 'line-through text-slate-400' : 'text-slate-800'
+                  }"
+                >
+                  {todo.title}
+                </span>
+              </label>
+            </li>
+          ))}
+        </ul>
       </div>
     </main>
   );
