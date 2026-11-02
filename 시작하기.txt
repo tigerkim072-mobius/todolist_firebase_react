@@ -127,3 +127,5 @@ service cloud.firestore {
 
 -----------------------------------------------
 
+11. 할 일 완료처리 ( 리액트 + Firebase 연동 todolist 만들기 )
+https://www.youtube.com/watch?v=qVy42UInW6I&list=PLTb3qGCzYjS0Qm0PDKtU9v3m5F1iO_ZFf&index=11

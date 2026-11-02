@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
-import { addTodo, fetchTodos } from './services/todoService';
+import {
+  addTodo,
+  fetchTodos,
+  toggleTodoCompletion,
+} from './services/todoService';
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -28,6 +32,34 @@ function App() {
     loadTodos();
   }, []); // 즉시 실행함수 IIFE를 사용하여 비동기 함수 호출 (Immediately Invoked Function Expression)
 
+  // 완료 체크 토글
+  const handleToggleTodo = async (todoId) => {
+    const todo = todos.find((t) => t.id === todoId);
+    if (!todo) return;
+
+    try {
+      await toggleTodoCompletion(todoId, !todo.completed);
+      setTodos((prevTodos) =>
+        prevTodos.map((t) =>
+          t.id === todoId ? { ...t, completed: !t.completed } : t,
+        ),
+      );
+    } catch (error) {
+      console.error('Error toggling todo completion:', error);
+      alert('할일 상태 변경 중 오류가 발생했습니다. 다시 시도해주세요.');
+    }
+  };
+
+  // // 삭제 버튼 클릭 시
+  // const handleDeleteTodo = async (todoId) => {
+  //   try {
+  //     await deleteTodo(todoId);
+  //     setTodos((prevTodos) => prevTodos.filter((t) => t.id !== todoId));
+  //   } catch (error) {
+  //     console.error('Error deleting todo:', error);
+  //     alert('할일 삭제 중 오류가 발생했습니다. 다시 시도해주세요.');
+  //   }
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('newTitle:', newTitle);
@@ -97,7 +129,8 @@ function App() {
                 <input
                   type="checkbox"
                   checked={todo.completed}
-                  onChange={() => handleToggleTodo(todo.id)}
+                  // onChange={() => handleToggleTodo(todo.id)}
+                  onChange={(e) => handleToggleTodo(todo.id, !e.target.checked)}
                   className="form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500"
                 />
                 <label

@@ -5,6 +5,8 @@ import {
   getDocs,
   orderBy,
   query,
+  doc,
+  updateDoc,
 } from 'firebase/firestore';
 
 const todoCollection = collection(db, 'todos');
@@ -29,4 +31,10 @@ export async function fetchTodos() {
   const q = query(todoCollection, orderBy('createdAt', 'desc'));
   const snapshot = await getDocs(q);
   return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+}
+
+// 완료 상태 코드
+export async function toggleTodoCompletion(todoId, completed) {
+  const todoDoc = doc(db, 'todos', todoId);
+  await updateDoc(todoDoc, { completed });
 }
