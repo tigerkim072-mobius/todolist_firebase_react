@@ -114,6 +114,16 @@ https://www.youtube.com/watch?v=7q3o6oNG8tE&list=PLTb3qGCzYjS0Qm0PDKtU9v3m5F1iO_
 
 
 
+rules_version = '2';
 
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read: if true;
+      // allow write, create, delete : if auth == true
+    }
+  }
+}
 
+-----------------------------------------------
 
