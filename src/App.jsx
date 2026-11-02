@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { addTodo } from './services/todoService';
+import { addTodo, fetchTodos } from './services/todoService';
 
 function App() {
+  const [todos, setTodos] = useState([]);
   const [newTitle, setNewTitle] = useState('');
   const [adding, setAdding] = useState(false);
 
@@ -15,8 +16,12 @@ function App() {
     setAdding(true);
 
     try {
-      addTodo(title);
+      await addTodo(title);
       setNewTitle('');
+
+      const data = await fetchTodos();
+      setTodos(data);
+      console.log('Fetched todos:', data);
     } catch (error) {
       console.error('Error adding todo:', error);
       alert('할일 추가 중 오류가 발생했습니다. 다시 시도해주세요.');
