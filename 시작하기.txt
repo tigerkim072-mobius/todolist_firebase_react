@@ -1,2 +1,119 @@
 
 https://www.youtube.com/watch?v=mTrQk90OI98&list=PLTb3qGCzYjS0Qm0PDKtU9v3m5F1iO_ZFf
+
+
+ps> npm create vite@latest .
+
+npm install
+npm run dev
+
+npm install -D tailwindcss@3  postcss autoprefixer
+
+
+PS C:\demo\todolist_firebase_react> npx tailwindcss init -p
+
+Created Tailwind CSS config file: tailwind.config.js
+Created PostCSS config file: postcss.config.js
+
+
+------------------
+tailwind.config.js 수정
+npm run dev 
+
+------------------
+tailwind className이 없으면 경고가 나옴
+
+
+------------------
+firebase console로 이동
+프로젝트 만들기 :  my_todo_firebase
+
+------------------
+앱추가 : my_todolist
+
+
+------------------
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDAoXvLsELnjz3e3OSRh8cmNBZhEp1iamQ",
+  authDomain: "my-todo-firebase-912f5.firebaseapp.com",
+  projectId: "my-todo-firebase-912f5",
+  storageBucket: "my-todo-firebase-912f5.firebasestorage.app",
+  messagingSenderId: "317206736435",
+  appId: "1:317206736435:web:90b6abf19bcb12bbf6fd46",
+  measurementId: "G-T6H9WDKYZW"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+
+
+-----------------------------------------------
+https://www.youtube.com/watch?v=LGqpDFStDOc&list=PLTb3qGCzYjS0Qm0PDKtU9v3m5F1iO_ZFf&index=3
+-----------------------------------------------
+Firestore > 데이터베이스 만들기
+-----------------------------------------------
+npm install firebase
+
+
+-----------------------------------------------
+.env.local 파일 생성
+
+
+VITE_FIREBASE_API_KEY="AIzaSyDAoXvLsELnjz3e3OSRh8cmNBZhEp1iamQ"
+VITE_FIREBASE_AUTH_DOMAIN="my-todo-firebase-912f5.firebaseapp.com"
+VITE_FIREBASE_PROJECT_ID="my-todo-firebase-912f5"
+VITE_FIREBASE_STORAGE_BUCKET="my-todo-firebase-912f5.firebasestorage.app"
+VITE_FIREBASE_MESSAGING_SENDER_ID="317206736435"
+VITE_FIREBASE_APP_ID="1:317206736435:web:90b6abf19bcb12bbf6fd46"
+VITE_FIREBASE_MEASUREMENT_ID="G-T6H9WDKYZW"
+
+-----------------------------------------------
+firebase.js 생성
+
+
+
+import { initializeApp } from 'firebase/app';
+import { getAnalytics } from 'firebase/analytics';
+import { getFirestore } from 'firebase/firestore';
+
+const firebaseConfig = {
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+const analytics = getAnalytics(app);
+export const db = getFirestore(app);
+
+
+-----------------------------------------------
+https://www.youtube.com/watch?v=pK8Q2ix_n7A&list=PLTb3qGCzYjS0Qm0PDKtU9v3m5F1iO_ZFf&index=4
+
+기본스타일 적용하기
+
+
+-----------------------------------------------
+https://www.youtube.com/watch?v=7q3o6oNG8tE&list=PLTb3qGCzYjS0Qm0PDKtU9v3m5F1iO_ZFf&index=5
+
+
+
+
+
+
